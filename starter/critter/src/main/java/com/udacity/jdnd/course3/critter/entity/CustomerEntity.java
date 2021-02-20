@@ -11,7 +11,7 @@ public class CustomerEntity extends UserEntity{
 
     private String notes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customerEntity", cascade = CascadeType.ALL, targetEntity = PetEntity.class)
     private List<PetEntity> pet;
 
     public CustomerEntity() {
