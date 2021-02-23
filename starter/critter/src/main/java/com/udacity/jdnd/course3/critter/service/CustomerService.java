@@ -19,15 +19,15 @@ public class CustomerService {
         return new CustomerEntity();
     }
 
+    public CustomerEntity getCustomerById(Long id){
+        return customerRepository.getById(id);
+    }
+
     public Long save(CustomerEntity customerEntity){
         return customerRepository.save(customerEntity).getId();
     }
 
     public List<CustomerEntity> getCustomers() {
         return customerRepository.findCustomerEntities();
-    }
-
-    public CustomerEntity getOwnerByPet(PetEntity petEntity) {
-        return customerRepository.findByPetEntity(petEntity);
     }
 }
