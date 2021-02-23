@@ -16,7 +16,7 @@ public interface PetRepository extends JpaRepository<PetEntity, Long> {
 
     List<PetEntity> findByCustomerEntity(CustomerEntity customerEntity);
 
-    @Query("select '*' from PetEntity")
+    @Query("select p from PetEntity p")
     List<PetEntity> findPetEntities();
 
     PetEntity getById(Long petId);

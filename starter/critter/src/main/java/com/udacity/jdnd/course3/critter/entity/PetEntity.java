@@ -24,7 +24,7 @@ public class PetEntity {
     private LocalDate birthDate;
     private String notes;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

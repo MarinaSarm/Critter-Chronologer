@@ -15,6 +15,6 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
 
     CustomerEntity getById(Long petId);
 
-    @Query("select '*' from CustomerEntity c")
+    @Query("select c from CustomerEntity c")
     List<CustomerEntity> findCustomerEntities();
 }
