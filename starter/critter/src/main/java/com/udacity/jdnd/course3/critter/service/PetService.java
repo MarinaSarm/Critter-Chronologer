@@ -23,7 +23,10 @@ public class PetService {
     }
 
     public Long save(PetEntity petEntity){
-        return petRepository.save(petEntity).getId();
+        petRepository.save(petEntity);
+        // we need to save pet also by customer
+        customerService.addPetToCustomer(petEntity, petEntity.getCustomerEntity());
+        return petEntity.getId();
     }
 
     public List<PetEntity> getPetsByOwnerId(Long ownerId) {

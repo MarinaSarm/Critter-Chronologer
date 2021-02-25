@@ -7,6 +7,7 @@ import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,5 +30,18 @@ public class CustomerService {
 
     public List<CustomerEntity> getCustomers() {
         return customerRepository.findCustomerEntities();
+    }
+
+    public void addPetToCustomer(PetEntity pet, CustomerEntity customer) {
+        // check if we the customer have some pets already
+        List<PetEntity> pets = customer.getPet();
+        if (pets == null) {
+            pets = new ArrayList<PetEntity>();
+            pets.add(pet);
+        } else {
+            pets.add(pet);
+        }
+        customer.setPet(pets);
+        customerRepository.save(customer);
     }
 }

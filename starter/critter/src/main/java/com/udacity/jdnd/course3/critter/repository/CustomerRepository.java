@@ -13,7 +13,7 @@ import java.util.List;
 @Transactional
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-    CustomerEntity getById(Long petId);
+    CustomerEntity getById(Long id);
 
     @Query("select c from CustomerEntity c")
     List<CustomerEntity> findCustomerEntities();
