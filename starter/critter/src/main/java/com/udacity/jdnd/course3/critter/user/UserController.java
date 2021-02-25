@@ -1,9 +1,12 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.entity.CustomerEntity;
+import com.udacity.jdnd.course3.critter.entity.EmployeeEntity;
 import com.udacity.jdnd.course3.critter.entity.PetEntity;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
+import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,9 @@ public class UserController {
 
     @Autowired
     PetService petService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     private CustomerDTO convertCustomerEntityToDTO(CustomerEntity customerEntity){
         CustomerDTO customerDTO = new CustomerDTO();
@@ -63,9 +69,14 @@ public class UserController {
         return customerEntity;
     }
 
+    private EmployeeDTO convertEmployeeEntityToDTO(EmployeeEntity employeeEntity){
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        BeanUtils.copyProperties(employeeEntity, employeeDTO);
+        return employeeDTO;
+    }
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-
         CustomerEntity customer = new CustomerEntity();
         customer.setName(customerDTO.getName());
         customer.setNotes(customerDTO.getNotes());
@@ -88,12 +99,18 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        employeeEntity.setName(employeeDTO.getName());
+        employeeEntity.setSkills(employeeDTO.getSkills());
+        employeeEntity.setDaysAvailable(employeeDTO.getDaysAvailable());
+        employeeService.save(employeeEntity);
+        return convertEmployeeEntityToDTO(employeeEntity);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        EmployeeEntity employeeEntity = employeeService.getById(employeeId);
+        return convertEmployeeEntityToDTO(employeeEntity);
     }
 
     @PutMapping("/employee/{employeeId}")
