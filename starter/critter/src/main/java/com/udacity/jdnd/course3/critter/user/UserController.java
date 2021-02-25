@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -75,6 +77,21 @@ public class UserController {
         return employeeDTO;
     }
 
+    private EmployeeEntity convertDTOtoEmployeeEntity(EmployeeRequestDTO employeeDTO, Set<DayOfWeek> day){
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        BeanUtils.copyProperties(employeeDTO, employeeEntity);
+        employeeEntity.setDaysAvailable(day);
+        return employeeEntity;
+    }
+
+    private List<EmployeeDTO> convertEmployeeEntityListToEmployeeDTOList(List<EmployeeEntity> employeeEntityList){
+        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+        for(EmployeeEntity employee : employeeEntityList){
+            employeeDTOList.add(convertEmployeeEntityToDTO(employee));
+        }
+        return employeeDTOList;
+    }
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         CustomerEntity customer = new CustomerEntity();
@@ -120,7 +137,15 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        // convert date to set of days
+        LocalDate date = employeeDTO.getDate();
+        Set<DayOfWeek> day = new HashSet<DayOfWeek>();
+        day.add(date.getDayOfWeek());
+        EmployeeEntity employeeEntity = convertDTOtoEmployeeEntity(employeeDTO, day);
+        Set<DayOfWeek> days = employeeEntity.getDaysAvailable();
+        Set<EmployeeSkill> skills = employeeEntity.getSkills();
+        List<EmployeeEntity> employeeEntities = employeeService.findAvailableEmployees(skills, days);
+        return convertEmployeeEntityListToEmployeeDTOList(employeeEntities);
     }
 
 }

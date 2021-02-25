@@ -10,10 +10,10 @@ import java.util.Set;
 @Table(name = "employee")
 public class EmployeeEntity extends UserEntity {
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<EmployeeSkill> skills;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<DayOfWeek> daysAvailable;
 
     public EmployeeEntity() {
