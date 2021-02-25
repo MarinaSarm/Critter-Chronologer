@@ -20,4 +20,6 @@ public interface PetRepository extends JpaRepository<PetEntity, Long> {
     List<PetEntity> findPetEntities();
 
     PetEntity getById(Long petId);
+
+    PetEntity getByName(String name);
 }

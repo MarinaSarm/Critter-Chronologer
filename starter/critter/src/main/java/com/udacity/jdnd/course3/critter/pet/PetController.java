@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,14 @@ public class PetController {
         return convertPetEntityToDTO(petService.getPetByName(name));
     }
 
+    private List<PetDTO> convertPetEntityListToPetDTOList(List<PetEntity> petList){
+        List<PetDTO> petDTOList = new ArrayList<>();
+        for(PetEntity pet : petList){
+            petDTOList.add(convertPetEntityToDTO(pet));
+        }
+        return petDTOList;
+    }
+
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
         PetEntity pet = new PetEntity();
@@ -50,7 +59,8 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        PetEntity pet = petService.getPetById(petId);
+        return convertPetEntityToDTO(pet);
     }
 
     @GetMapping
@@ -60,6 +70,7 @@ public class PetController {
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+        List<PetEntity> pets = petService.getPetsByOwnerId(ownerId);
+        return convertPetEntityListToPetDTOList(pets);
     }
 }

@@ -46,11 +46,11 @@ public class UserController {
     }
 
     private List<CustomerDTO> convertCustomerEntityListToCustomerDTOList(List<CustomerEntity> customerList){
-        List<CustomerDTO> retCustomerDTOList = new ArrayList<>();
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
         for(CustomerEntity customer : customerList){
-            retCustomerDTOList.add(convertCustomerEntityToDTO(customer));
+            customerDTOList.add(convertCustomerEntityToDTO(customer));
         }
-        return retCustomerDTOList;
+        return customerDTOList;
     }
 
     public CustomerDTO getCustomerDTO(String name){

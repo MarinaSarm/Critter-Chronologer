@@ -19,7 +19,11 @@ public class PetService {
     CustomerService customerService;
 
     public PetEntity getPetByName(String name){
-        return new PetEntity();
+        return petRepository.getByName(name);
+    }
+
+    public PetEntity getPetById(Long id) {
+        return petRepository.getById(id);
     }
 
     public Long save(PetEntity petEntity){

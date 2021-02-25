@@ -17,7 +17,7 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
     public CustomerEntity getCustomerByName(String name){
-        return new CustomerEntity();
+        return customerRepository.getByName(name);
     }
 
     public CustomerEntity getCustomerById(Long id){
