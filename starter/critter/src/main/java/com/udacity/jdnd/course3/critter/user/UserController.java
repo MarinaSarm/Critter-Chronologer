@@ -134,6 +134,7 @@ public class UserController {
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
         EmployeeEntity employeeEntity = employeeService.getById(employeeId);
         employeeEntity.setDaysAvailable(daysAvailable);
+        employeeService.save(employeeEntity);
         convertEmployeeEntityToDTO(employeeEntity);
     }
 

@@ -65,7 +65,7 @@ public class PetController {
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        return convertPetEntityListToPetDTOList(petService.getPets());
     }
 
     @GetMapping("/owner/{ownerId}")
